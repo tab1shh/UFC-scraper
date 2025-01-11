@@ -1,4 +1,4 @@
-fighter_name,knockdowns,sig_strikes_attempted,sig_strikes_succeeded,total_strikes_attempted,total_strikes_succeeded,takedowns_attempted,takedown_succeeded,submission_attempted,reversals,control_time,event_name,fight_url
+fighter_name,knockdowns,sig_strikes_attempted,sig_strikes_succeeded,total_strikes_attempted,total_strikes_succeeded,takedowns_attempted,takedown_succeeded,submission_attempted,reversals,control_time,event,fight_url
 Colby Covington,0,37,124,71,161,1,8,0,0,3:40,UFC Fight Night: Covington vs. Buckley,http://ufcstats.com/fight-details/00c6a2ef07ca51da
 Joaquin Buckley,0,75,151,81,160,0,1,1,0,1:18,UFC Fight Night: Covington vs. Buckley,http://ufcstats.com/fight-details/00c6a2ef07ca51da
 Cub Swanson,1,99,158,114,173,0,0,0,0,0:10,UFC Fight Night: Covington vs. Buckley,http://ufcstats.com/fight-details/7521015554088962

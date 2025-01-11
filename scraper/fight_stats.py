@@ -9,8 +9,8 @@ import os
 import re
 from datetime import datetime
 
-file_path = os.path.join(os.getcwd(), 'scraped_files')  
-url_path = os.path.join(os.getcwd(), 'url_data')
+file_path = os.path.join(os.getcwd(), 'scraper/scraped_files')  
+url_path = os.path.join(os.getcwd(), 'scraper/url_data')
 
 def filter_duplicates(fight_url):
     # first check if the file is even in the specified path
@@ -132,7 +132,7 @@ def scrape_fightstats():
                              'submission_attempted',
                              'reversals',
                              'control_time',
-                             'event_name',
+                             'event',
                              'fight_url'])
         print('fight_stats has been created.')
     else:

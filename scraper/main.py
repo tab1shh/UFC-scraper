@@ -8,8 +8,8 @@ def main():
 
     # fights.scrape_all_fights()
     # fighters.scrape_all_fighters()
-    # fight_stats.scrape_fightstats()
-    fighter_stats.scrape_fighterstats()
+    fight_stats.scrape_fightstats()
+    # fighter_stats.scrape_fighterstats()
 
 if __name__ == '__main__':
     main()
