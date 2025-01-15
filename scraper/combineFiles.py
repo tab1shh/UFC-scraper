@@ -3,19 +3,17 @@ import glob
 import os
 import numpy as np
 
-# Define the file paths
 file_path = "scraper/scraped_files/"
 fighter_data_file = file_path + "fighter_data.csv"
 fighter_stats_file = file_path + "fighter_stats.csv"
 
-# Load the data into DataFrames
 fighter_data = pd.read_csv(fighter_data_file, encoding='latin-1')
 fighter_stats = pd.read_csv(fighter_stats_file, encoding='latin-1')
 
-# Merge the two dataframes on the 'fighter_url' column
+# merge the two dataframes on the 'fighter_url' column because its common between the two
 merged_data = pd.merge(fighter_data, fighter_stats, on='fighter_url', how='inner')
 
-# Select the desired columns
+# desired columns
 combined_data = merged_data[[
     'fighter_name', 'height_cm', 'weight_pounds', 'reach_cm', 'stance', 
     'date_of_birth', 'f_wins', 'f_losses', 'f_draws', 'f_dc_nc', 
@@ -35,7 +33,6 @@ combined_data['loss_rate'] = np.where(total_fights > 0, combined_data['f_losses'
 combined_data['draw_rate'] = np.where(total_fights > 0, combined_data['f_draws'] / total_fights, 0)
 combined_data['dc_nc_rate'] = np.where(total_fights > 0, combined_data['f_dc_nc'] / total_fights, 0)
 
-# Convert the rates to percentages by multiplying by 100 and appending '%'
 combined_data['win_rate'] = combined_data['win_rate'] * 100
 combined_data['loss_rate'] = combined_data['loss_rate'] * 100
 combined_data['draw_rate'] = combined_data['draw_rate'] * 100
@@ -55,8 +52,6 @@ col_order = [
 
 combined_data = combined_data[col_order]
 
-# Save the combined data to a new CSV file
-    
 combined_data.to_csv('scraper/combined_fighter_data.csv', index=False, na_rep='NA')
 
 print("Files successfully merged and saved.")
