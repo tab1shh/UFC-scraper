@@ -5,8 +5,8 @@ import os
 import re
 from datetime import datetime
 
-file_path = os.path.join(os.getcwd(), 'scraped_files')  
-url_path = os.path.join(os.getcwd(), 'url_data')
+file_path = os.path.join(os.getcwd(), 'scraper/scraped_files')  
+url_path = os.path.join(os.getcwd(), 'scraper/url_data')
 
 def filter_duplicates(fighter_url):
     # first check if the file is even in the specified path
@@ -138,9 +138,9 @@ def scrape_fighterstats():
             StrAcc = get_strAcc(fighter_stats[6])
             SApM = get_SApM(fighter_stats[7])
             StrDef = get_strDef(fighter_stats[8])
-            TD_Acc = get_TD_Acc(fighter_stats[10])
-            TD_Def = get_TD_Def(fighter_stats[11])
-            Sub_Avg = get_Sub_Avg(fighter_stats[12])
+            TD_Acc = get_TD_Acc(fighter_stats[11])
+            TD_Def = get_TD_Def(fighter_stats[12])
+            Sub_Avg = get_Sub_Avg(fighter_stats[13])
             
 
             writer.writerow([name.strip(), 

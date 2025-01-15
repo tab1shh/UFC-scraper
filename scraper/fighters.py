@@ -9,8 +9,8 @@ import os
 import re
 from datetime import datetime
 
-file_path = os.path.join(os.getcwd(), 'scraped_files')  
-url_path = os.path.join(os.getcwd(), 'url_data')
+file_path = os.path.join(os.getcwd(), 'scraper/scraped_files')  
+url_path = os.path.join(os.getcwd(), 'scraper/url_data')
 
 def create_scraped_csv_file():
     if 'fighter_data.csv' not in os.listdir(file_path):
@@ -159,7 +159,7 @@ def scrape_all_fighters():
                 if (len(record[-1]) > 1):
                     fighter_nc_dq = record[-1].split('(')[-1][0] # split by ( and take the part after it, then extract the first character
                 else:
-                    fighter_nc_dq = 'NULL'
+                    fighter_nc_dq = 0
 
                 writer.writerow([fighter_first_name.strip(),
                                  fighter_last_name.strip(),
