@@ -59,6 +59,4 @@ combined_data = combined_data[col_order]
     
 combined_data.to_csv('scraper/combined_fighter_data.csv', index=False, na_rep='NA')
 
-
-
 print("Files successfully merged and saved.")
