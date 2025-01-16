@@ -28,68 +28,37 @@ def get_name(name):
 
 def get_SLpM(SLpM):
     SLpM_text = SLpM.text.split(':')[1]
-
-    if '0.00' in SLpM_text:
-        return 'NULL'
-    else:
-        return SLpM_text.split()[0].strip()
+    return SLpM_text.split()[0].strip()
 
 def get_strAcc(strAcc):
     strAcc_text = strAcc.text.split(':')[1]
 
-    if '0%' in strAcc_text:
-        return 'NULL'
-    else:
-        return strAcc_text.split()[0].strip()
+    return strAcc_text.split()[0].strip() if strAcc_text != '0%' else 'NULL'
     
 def get_SApM(SApM):
     SApM_text = SApM.text.split(':')[1]
-
-    if '0.00' in SApM_text:
-        return 'NULL'
-    else:
-        return SApM_text.split()[0].strip()
+    return SApM_text.split()[0].strip()
 
 
 def get_strDef(strDef):
     strDef_text = strDef.text.split(':')[1]
-
-    if '0%' in strDef_text:
-        return 'NULL'
-    else:
-        return strDef_text.split()[0].strip()
+    return strDef_text.split()[0].strip()
 
 def get_TD_Avg(TD_Avg):
-    TD_Avg_text = TD_Avg.text.split(':')[0]
-
-    if '0.00' in TD_Avg_text:
-        return 'NULL'
-    else:
-        return TD_Avg_text.split()
+    TD_Avg_text = TD_Avg.text.split(':')[1]
+    return TD_Avg_text.split()[0].strip()
 
 def get_TD_Acc(TD_Acc):
     TD_Acc_text = TD_Acc.text.split(':')[1]
-
-    if '0%' in TD_Acc_text:
-        return 'NULL'
-    else:
-        return TD_Acc_text.split()[0].strip()
+    return TD_Acc_text.split()[0].strip()
 
 def get_TD_Def(TD_Def):
     TD_Def_text = TD_Def.text.split(':')[1]
-
-    if '0%' in TD_Def_text:
-        return 'NULL'
-    else:
-        return TD_Def_text.split()[0].strip()
+    return TD_Def_text.split()[0].strip()
 
 def get_Sub_Avg(Sub_Avg):
     Sub_Avg_text = Sub_Avg.text.split(':')[1]
-
-    if '0.00' in Sub_Avg_text:
-        return 'NULL'
-    else:
-        return Sub_Avg_text.split()[0].strip()
+    return Sub_Avg_text.split()[0].strip() if Sub_Avg_text != '0.00' else 'NULL'
 
 def scrape_fighterstats():
     if 'fighter_stats.csv' not in os.listdir(file_path):
@@ -100,6 +69,7 @@ def scrape_fighterstats():
                              'career_StrAcc',
                              'career_SApM',
                              'career_StrDef',
+                             'career_TD_Avg',
                              'career_TD_Acc',
                              'career_TD_Def',
                              'career_Sub_Avg',
@@ -138,6 +108,7 @@ def scrape_fighterstats():
             StrAcc = get_strAcc(fighter_stats[6])
             SApM = get_SApM(fighter_stats[7])
             StrDef = get_strDef(fighter_stats[8])
+            TD_Avg = get_TD_Avg(fighter_stats[10])
             TD_Acc = get_TD_Acc(fighter_stats[11])
             TD_Def = get_TD_Def(fighter_stats[12])
             Sub_Avg = get_Sub_Avg(fighter_stats[13])
@@ -148,6 +119,7 @@ def scrape_fighterstats():
                              StrAcc,
                              SApM,
                              StrDef,
+                             TD_Avg,
                              TD_Acc,
                              TD_Def,
                              Sub_Avg,

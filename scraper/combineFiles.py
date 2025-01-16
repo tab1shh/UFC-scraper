@@ -17,7 +17,7 @@ merged_data = pd.merge(fighter_data, fighter_stats, on='fighter_url', how='inner
 combined_data = merged_data[[
     'fighter_name', 'height_cm', 'weight_pounds', 'reach_cm', 'stance', 
     'date_of_birth', 'f_wins', 'f_losses', 'f_draws', 'f_dc_nc', 
-    'career_SLpM', 'career_StrAcc', 'career_SApM', 'career_StrDef', 
+    'career_SLpM', 'career_StrAcc', 'career_SApM', 'career_StrDef', 'career_TD_Avg', 
     'career_TD_Acc', 'career_TD_Def', 'career_Sub_Avg'
 ]]
 
@@ -46,7 +46,7 @@ combined_data['dc_nc_rate'] = combined_data['dc_nc_rate'].round(0).astype(int).a
 col_order = [
     'fighter_name', 'height_cm', 'weight_pounds', 'reach_cm', 'stance', 
     'date_of_birth', 'f_wins', 'win_rate', 'f_losses', 'loss_rate', 'f_draws', 'draw_rate', 'f_dc_nc', 'dc_nc_rate', 
-    'career_SLpM', 'career_StrAcc', 'career_SApM', 'career_StrDef', 
+    'career_SLpM', 'career_StrAcc', 'career_SApM', 'career_StrDef', 'career_TD_Avg',
     'career_TD_Acc', 'career_TD_Def', 'career_Sub_Avg'
 ]
 
