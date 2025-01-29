@@ -1,4 +1,4 @@
-import get_urls, fights, fighters, fight_stats, fighter_stats, test
+import get_urls, fights, fighters, fight_stats, fighter_stats
 def main():
 
     # scrapes all urls from ufcstats.com
