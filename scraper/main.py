@@ -6,9 +6,9 @@ def main():
     # get_urls.get_fight_urls()
     # get_urls.get_fighter_urls()
 
-    # fights.scrape_all_fights()
-    # fighters.scrape_all_fighters()
-    # fight_stats.scrape_fightstats()
+    fights.scrape_all_fights()
+    fighters.scrape_all_fighters()
+    fight_stats.scrape_fightstats()
     fighter_stats.scrape_fighterstats()
 
 if __name__ == '__main__':

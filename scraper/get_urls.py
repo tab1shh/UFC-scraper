@@ -5,19 +5,33 @@ import os
 import time
 
 # helper function to write URLs to a CSV file
-def write_urls_to_csv(file, urls):
-    # new directory for the csv files
+def write_urls_to_csv(file, new_urls):
+    """Append only new URLs to the existing file."""
     os.makedirs('url_data', exist_ok=True)
-    path = os.getcwd() + '/url_data'
+    path = os.path.join(os.getcwd(), 'url_data', file)
+    
+    # Load existing URLs from the file
+    existing_urls = set()
+    if os.path.exists(path):
+        with open(path, 'r', newline='') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if row:
+                    existing_urls.add(row[0])  # Store existing URLs in a set
 
-    # save file to new directory and add urls to the file
-    try:
-        with open(path + '/' + file, 'w', newline='') as f:
+    # Filter out already existing URLs
+    new_urls = [url for url in new_urls if url not in existing_urls]
+
+    # Append only new URLs
+    if new_urls:
+        with open(path, 'a', newline='') as f:  # Open in append mode
             writer = csv.writer(f)
-            for url in urls:
+            for url in new_urls:
                 writer.writerow([url])
-    except Exception as e:
-        print(f'Error writing to file: {e}')
+        print(f"✅ {len(new_urls)} new URLs added to {file}")
+    else:
+        print(f"✅ No new URLs found for {file}. Data is already up to date.")
+
 
 # need to scrape each event, and from each event can scrape each fight
 def get_event_urls():
@@ -42,63 +56,79 @@ def get_event_urls():
 
 # scrapes url of each UFC fight from ufcstats.com, using the event urls 
 def get_fight_urls():
-    path = os.getcwd() + '/url_data'
+    path = os.path.join(os.getcwd(), 'url_data')
 
-    if os.path.exists(path + '/event_urls.csv'):
-        with open(path + '/' + 'event_urls.csv', 'r', newline='') as csv_events:
-            reader = csv.reader(csv_events)
-
-            event_urls = [] # used to store the URLs
-
+    # Load existing fight URLs
+    existing_fight_urls = set()
+    if os.path.exists(path + '/fight_urls.csv'):
+        with open(path + '/fight_urls.csv', 'r', newline='') as csv_fights:
+            reader = csv.reader(csv_fights)
             for row in reader:
                 if row:
-                    event_urls.append(row[0]) # adds URL to the list
-    else:
-        print("The file 'event_urls.csv' does not exist. Please check the path or create the file.")
+                    existing_fight_urls.add(row[0])  # Store existing fight URLs
+
+    # Load event URLs (to scrape new fights from new events)
+    if not os.path.exists(path + '/event_urls.csv'):
+        print("⚠️ The file 'event_urls.csv' does not exist. Please scrape events first.")
         return
 
-    print('Scraping for fight links...')
+    with open(path + '/event_urls.csv', 'r', newline='') as csv_events:
+        reader = csv.reader(csv_events)
+        event_urls = [row[0] for row in reader if row]
 
-    fight_urls = []
+    print('🔄 Checking for new fight links...')
+
+    fight_urls = set(existing_fight_urls)  # Start with existing fights
 
     for url in event_urls:
+        if url in fight_urls:  # Skip already scraped events
+            continue
+        
         event = requests.get(url)
         event_soup = bs4.BeautifulSoup(event.text, 'lxml')
 
         for item in event_soup.find_all('a', class_='b-flag b-flag_style_green'):
             href = item.get('href')
-
             if href and 'fight-details' in href:
-                fight_urls.append(href)
+                fight_urls.add(href)  # Add to the fight URL set
 
-    write_urls_to_csv('fight_urls.csv', fight_urls)
+    # Find only new fight URLs
+    new_fight_urls = fight_urls - existing_fight_urls
+
+    # Append only new fights to the CSV file
+    write_urls_to_csv('fight_urls.csv', new_fight_urls)
     print(f'Fight links successfully scraped.\nTotal:{len(fight_urls)}')
 
 # scrapes url of each UFC fighter from ufcstats.com
 def get_fighter_urls():
-    print('Scraping for fighter links...')
+    print('🔄 Checking for new fighter links...')
 
-    # create a list of each fighter url alphabetically
-    fighter_alpha_url = []
+    path = os.path.join(os.getcwd(), 'url_data')
 
-    for letter in 'abcdefghijklmnopqrstuvwxyz':
-        fighter_alpha_url.append(requests.get(f'http://www.ufcstats.com/statistics/fighters?char={letter}&page=all'))
-        time.sleep(1)
+    # Load existing fighter URLs
+    existing_fighter_urls = set()
+    if os.path.exists(path + '/fighter_urls.csv'):
+        with open(path + '/fighter_urls.csv', 'r', newline='') as csv_fighters:
+            reader = csv.reader(csv_fighters)
+            for row in reader:
+                if row:
+                    existing_fighter_urls.add(row[0])  # Store existing fighter URLs
 
-    # iterate through each page and get fighter links
-    # so loop through each URL in the fighter_alpha_url list because it contains the pages for each letter of the alphabet
-    fighter_list = []
+    # Create a list of alphabetically ordered fighter pages (A-Z)
+    fighter_alpha_urls = [f'http://www.ufcstats.com/statistics/fighters?char={letter}&page=all' for letter in 'abcdefghijklmnopqrstuvwxyz']
 
-    for url in fighter_alpha_url: 
-        soup = bs4.BeautifulSoup(url.text, 'lxml')
-        fighter_list.append(soup)
+    new_fighter_urls = set()
 
-    # get the fighter URLs from the scraped pages
-    fighter_urls = [] 
-    for fighter in fighter_list:
-        for link in fighter.select('a.b-link')[1::3]: # select every third link skipping the first one because there are 3 links and only need one
-            fighter_urls.append(link.get('href'))
+    for url in fighter_alpha_urls:
+        fighter_page = requests.get(url)
+        soup = bs4.BeautifulSoup(fighter_page.text, 'lxml')
 
-    write_urls_to_csv('fighter_urls.csv', fighter_urls)
+        for link in soup.select('a.b-link')[1::3]:  # Get fighter profile links
+            href = link.get('href')
+            if href and href not in existing_fighter_urls:
+                new_fighter_urls.add(href)
 
-    print(f'Fight links successfully scraped.\nTotal:{len(fighter_urls)}')
+    # Append only new fighter URLs to the CSV file
+    write_urls_to_csv('fighter_urls.csv', new_fighter_urls)
+
+    print(f'Fight links successfully scraped.\nTotal:{len(new_fighter_urls)}')

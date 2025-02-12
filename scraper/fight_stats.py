@@ -9,8 +9,8 @@ import os
 import re
 from datetime import datetime
 
-file_path = os.path.join(os.getcwd(), 'scraper/scraped_files')  
-url_path = os.path.join(os.getcwd(), 'scraper/url_data')
+file_path = os.path.join(os.getcwd(), 'scraped_files')  
+url_path = os.path.join(os.getcwd(), 'url_data')
 
 def filter_duplicates(fight_url):
     # first check if the file is even in the specified path

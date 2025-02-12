@@ -9,8 +9,8 @@ import os
 import re
 from datetime import datetime
 
-file_path = os.path.join(os.getcwd(), 'scraper/scraped_files')  
-url_path = os.path.join(os.getcwd(), 'scraper/url_data')
+file_path = os.path.join(os.getcwd(), 'scraped_files')  
+url_path = os.path.join(os.getcwd(), 'url_data')
 
 def create_scraped_csv_file():
     if 'fighter_data.csv' not in os.listdir(file_path):
