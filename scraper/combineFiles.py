@@ -3,7 +3,7 @@ import glob
 import os
 import numpy as np
 
-file_path = "scraper/scraped_files/"
+file_path = "scraped_files/"
 fighter_data_file = file_path + "fighter_data.csv"
 fighter_stats_file = file_path + "fighter_stats.csv"
 
@@ -52,6 +52,6 @@ col_order = [
 
 combined_data = combined_data[col_order]
 
-combined_data.to_csv('scraper/combined_fighter_data.csv', index=False, na_rep='NA')
+combined_data.to_csv('combined_fighter_data.csv', index=False, na_rep='NA')
 
 print("Files successfully merged and saved.")

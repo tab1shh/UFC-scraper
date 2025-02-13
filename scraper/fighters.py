@@ -159,7 +159,7 @@ def scrape_all_fighters():
                 if (len(record[-1]) > 1):
                     fighter_nc_dq = record[-1].split('(')[-1][0] # split by ( and take the part after it, then extract the first character
                 else:
-                    fighter_nc_dq = 0
+                    fighter_nc_dq = 'NULL'
 
                 writer.writerow([fighter_first_name.strip(),
                                  fighter_last_name.strip(),
@@ -179,5 +179,4 @@ def scrape_all_fighters():
                 urls_scraped += 1
 
         print(f'{urls_scraped}/{urls_to_scrape} links scraped successfully')
-
 
