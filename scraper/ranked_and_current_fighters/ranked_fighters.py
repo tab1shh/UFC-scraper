@@ -8,7 +8,8 @@ import csv
 import os
 
 url = 'https://www.ufc.com/rankings'
-file_path = os.path.join(os.getcwd(), 'scraper/scraped_files')  
+file_path = os.path.join(os.getcwd(), 'ranked_and_current_fighters')  
+os.makedirs(file_path, exist_ok=True)
 
 response = requests.get(url)
 
@@ -17,7 +18,7 @@ soup = bs4.BeautifulSoup(response.text, 'lxml')
 name_elements = soup.find_all('td', class_='views-field views-field-title')
 
 
-with open(file_path + '/' + 'ufc_rankings.csv', mode='w', newline='', encoding='utf-8') as file:
+with open('ufc_rankings.csv', mode='w', newline='', encoding='utf-8') as file:
     writer = csv.writer(file)
     # Write the header
     writer.writerow(['Rank', 'Name'])
