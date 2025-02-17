@@ -37,3 +37,6 @@ The scraper navigates the UFC website to extract event, fight, and fighter detai
 ### Planned Enhancements
 - Include Active Fighters – Implement logic to detect and prioritize active fighters in the dataset.
 - Efficient Data Updating – Modify the scraper to check for new fights and update existing records instead of overwriting or duplicating files.
+
+## Contributing
+Feel free to fork the repo and submit PRs!
